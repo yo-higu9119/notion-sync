@@ -87,8 +87,15 @@ async function main() {
 
       log('INFO', `📍 ${jobName} → ${targetDbKeys.length}個のDBに配置`);
 
+      // デバッグ: マスターDBのプロパティ名一覧を出力
+      const sourceKeys = Object.keys(job.properties);
+      log('INFO', `  🔑 マスターDBプロパティ: ${sourceKeys.join(', ')}`);
+
       // プロパティマッピング
       const properties = mapProperties(job, propMapping.copy);
+
+      // デバッグ: マッピング結果のプロパティ名を出力
+      log('INFO', `  📋 マッピング済み: ${Object.keys(properties).join(', ')}`);
 
       // ページ内コンテンツ（案件詳細）を取得
       let children = [];
