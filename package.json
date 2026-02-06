@@ -1,0 +1,22 @@
+{
+  "name": "notion-sync",
+  "version": "1.0.0",
+  "description": "案件募集プラットフォーム - Notion自動同期システム",
+  "type": "module",
+  "scripts": {
+    "sync": "node src/sync.js",
+    "cleanup": "node src/cleanup.js",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.15"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "@jest/globals": "^29.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT"
+}

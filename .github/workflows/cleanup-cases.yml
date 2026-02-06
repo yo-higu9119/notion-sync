@@ -1,0 +1,35 @@
+name: Cleanup Cases
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run cleanup
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_MASTER_DB_ID: ${{ secrets.NOTION_MASTER_DB_ID }}
+          NOTION_VIDEO_LEVEL1_DB_ID: ${{ secrets.NOTION_VIDEO_LEVEL1_DB_ID }}
+          NOTION_VIDEO_LEVEL2_DB_ID: ${{ secrets.NOTION_VIDEO_LEVEL2_DB_ID }}
+          NOTION_VIDEO_LEVEL3_DB_ID: ${{ secrets.NOTION_VIDEO_LEVEL3_DB_ID }}
+          NOTION_DESIGN_LEVEL1_DB_ID: ${{ secrets.NOTION_DESIGN_LEVEL1_DB_ID }}
+          NOTION_DESIGN_LEVEL2_DB_ID: ${{ secrets.NOTION_DESIGN_LEVEL2_DB_ID }}
+          NOTION_DESIGN_LEVEL3_DB_ID: ${{ secrets.NOTION_DESIGN_LEVEL3_DB_ID }}
+        run: npm run cleanup
