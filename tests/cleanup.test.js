@@ -11,7 +11,7 @@ jest.unstable_mockModule('../src/notion-client.js', () => ({
   archivePage: mockArchivePage,
 }));
 
-describe('cleanup - findPublicJob', () => {
+describe('cleanup - queryDatabase', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -35,6 +35,17 @@ describe('cleanup - findPublicJob', () => {
       property: 'マスター案件ID',
       number: { equals: 1001 },
     });
+  });
+
+  test('フィルターなしで全件取得できる', async () => {
+    const mockPages = [{ id: 'page-1', properties: {} }];
+    mockQueryDatabase.mockResolvedValue(mockPages);
+
+    const { queryDatabase } = await import('../src/notion-client.js');
+    const results = await queryDatabase('test-db-id');
+
+    expect(results).toBeInstanceOf(Array);
+    expect(mockQueryDatabase).toHaveBeenCalledWith('test-db-id');
   });
 
   test('該当案件がない場合は空配列を返す', async () => {

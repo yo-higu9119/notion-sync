@@ -75,7 +75,7 @@ export async function queryDatabase(databaseId, filter) {
     const response = await withRetry(() =>
       notion.databases.query({
         database_id: databaseId,
-        filter,
+        ...(filter ? { filter } : {}),
         start_cursor: cursor,
       })
     );
