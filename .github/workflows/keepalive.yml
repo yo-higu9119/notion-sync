@@ -2,15 +2,19 @@ name: Keepalive Workflow
 
 on:
   schedule:
-    - cron: '0 0 1 * *' # 毎月1回、自動で実行
+    - cron: '0 0 1 * *' # 毎月1日に実行（60日制限より短い間隔）
   workflow_dispatch:
 
 jobs:
   keepalive:
     runs-on: ubuntu-latest
     permissions:
-      actions: write
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - uses: gautamkrishnar/keepalive-workflow@v1 # 自動でリポジトリをアクティブに保つAction
+      - name: Push empty commit to reset inactivity timer
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit --allow-empty -m "chore: keep workflows active [skip ci]"
+          git push
