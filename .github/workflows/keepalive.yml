@@ -3,6 +3,7 @@ name: Keepalive Workflow
 on:
   schedule:
     - cron: '0 0 1 * *' # 毎月1回、自動で実行
+  workflow_dispatch:
 
 jobs:
   keepalive:
